@@ -55,31 +55,11 @@ all three are keyword for variable declaration
 |            | var                                                                   | let                                                                                                                             | const                                                                                                                             |
 | ---------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | About      | it is oldest way of variable delcaration and rapidely used before es6 | it was introduced in es+                                                                                                        | it was also introduced in es+                                                                                                     |
-| Redeclare? | variable delcared with var keyword can be redclared                   | variables delcared with let keyword cannot be redeclared                                                                        | variables delcared with const keyword cannot be redefined or redclared                                                            |
+| Redeclare? |  can be redclared                   | variables delcared with let keyword cannot be redeclared                                                                        | variables delcared with const keyword cannot be redefined or redclared                                                            |
 | Reassigned?  | can be reassigned                                                      | can be reassigned                                                                                                                | cannot be reassigned                                                                                                              |
 | Scope      | these are functionally scoped                                         | these are functionally + blocked scoped                                                                                         | these are functionally + blocked scoped                                                                                           |
 | Hoisting   | var delcaration are hoisted but initialized with undefined            | let declaration are hoisted but not initialized they stay in temporal dead zone which gives ReferenceError if tried to accessed | const declaration are hoisted but not initialized they stay in temporal dead zone which gives ReferenceError if tried to accessed |
 
-Original notes:
-
-var vs let vs const
-
-all three are keyword for variable declaration
-
-var: it is oldest way of variable delcaration and rapidely used before es6
-variable delcared with var keyword can be redclared + redefined
-these are functionally scoped
-var delcaration are hoisted but initialized with undefined
-
-let: it was introduced in es+
-variables delcared with let keyword cannot be redeclared but can be redefined
-these are functionally + blocked scoped
-let declaration are hoisted but not initialized they stay in temporal dead zone which gives ReferenceError if tried to accessed
-
-const: it was also introduced in es+
-variables delcared with const keyword cannot be redefined or redclared
-these are functionally + blocked scoped
-const declaration are hoisted but not initialized they stay in temporal dead zone which gives ReferenceError if tried to accessed
 
 ### Hoisting
 

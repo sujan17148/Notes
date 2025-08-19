@@ -64,7 +64,7 @@ ans: it prints 3 three times because variable i is declared with var and since i
 
 if we had used let or const here then since these are block scoped each timeout would had their own unique i so it would print 0 1 2
 
-here one more thing var print 3 3 3 not 2 2 2 since our i<3 but then also we have 3 how?
+here var one gives 333 instead of 222 because first var i=0 runs(only once) and condition checked 0<3 true so our body gets executed and now before next execution i++ runs so in last iteration i++ so i becomes 3 but 3<3 so our code does not run but still value of i reamains 3.
 
 7. What will this complex hoisting example output?
 
