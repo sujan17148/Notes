@@ -1,5 +1,6 @@
 1: what is the output?
-```function add(a,b){
+```
+function add(a,b){
     console.log(a+b)
 }
 console.log(add(2,3)) // 5
