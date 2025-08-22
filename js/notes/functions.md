@@ -1,4 +1,3 @@
-```markdown
 # 🔥 JavaScript Functions — Complete Guide
 
 ---
@@ -265,6 +264,3 @@ console.log(arrowStyleSum(1, 2, 3, 4)); // 10
 - **Higher-Order Functions** → Take/return other functions  
 - **Recursive Functions** → Call themselves  
 - **Arguments vs Rest** → `arguments` (old), `...rest` (modern & better)
-
----
-```
