@@ -264,3 +264,129 @@ console.log(arrowStyleSum(1, 2, 3, 4)); // 10
 - **Higher-Order Functions** → Take/return other functions  
 - **Recursive Functions** → Call themselves  
 - **Arguments vs Rest** → `arguments` (old), `...rest` (modern & better)
+
+
+---
+# Function Methods in JavaScript
+
+## 1. `call()`
+- Invokes the function **immediately**.  
+- Arguments are passed **individually**.
+
+```js
+function introduce(greeting, punctuation) {
+  console.log(`${greeting}, my name is ${this.name}${punctuation}`);
+}
+
+const obj = { name: "Alice" };
+
+introduce.call(obj, "Hello", "!"); 
+// Output: Hello, my name is Alice!
+```
+
+---
+
+## 2. `apply()`
+- Same as `call()`, but arguments are passed **as an array**.
+
+```js
+function introduce(greeting, punctuation) {
+  console.log(`${greeting}, my name is ${this.name}${punctuation}`);
+}
+
+const obj = { name: "Alice" };
+
+introduce.apply(obj, ["Hello", "!!"]); 
+// Output: Hello, my name is Alice!!
+```
+
+---
+
+## 3. `bind()`
+- Returns a **new function** with `this` bound to the given object.  
+- Does **not** invoke immediately.  
+- You can pass all parameters up front, or partially apply them.
+
+```js
+// Passing all parameters up front
+const boundIntroduce = introduce.bind(obj, "Hey", "...");
+boundIntroduce();  
+// Output: Hey, my name is Alice...
+```
+
+```js
+// Partial application (pass some parameters now, rest later)
+const boundPartial = introduce.bind(obj, "Good morning");
+boundPartial("?"); 
+// Output: Good morning, my name is Alice?
+```
+
+---
+
+## 4. Arrow Functions and `this`
+- Arrow functions do **not** have their own `this`.  
+- They **inherit `this`** from their lexical scope (where they are defined).  
+- `call()`, `apply()`, and `bind()` **cannot change** `this` for arrow functions.
+
+```js
+const arrowIntroduce = (greeting, punctuation) => {
+  console.log(`${greeting}, my name is ${this.name}${punctuation}`);
+};
+
+arrowIntroduce.call(obj, "Hi", "!"); 
+// Output: Hi, my name is undefined! 
+// (since `this` is not `obj`)
+```
+
+---
+
+## 5. Making Arrow Functions Work with `this`
+
+### Example 1: Define inside a regular method
+```js
+const person = {
+  name: "Alice",
+  init() {
+    const arrow = (greeting, punctuation) => {
+      console.log(`${greeting}, my name is ${this.name}${punctuation}`);
+    };
+
+    arrow("Hello", "!"); 
+    // Output: Hello, my name is Alice!
+  }
+};
+
+person.init();
+```
+
+### Example 2: Arrow function + Closure
+```js
+function wrapper() {
+  // Arrow function inherits `this` from wrapper()
+  const arrow = () => console.log(this.name);
+  return arrow;
+}
+
+const person1 = { name: "Bob" };
+const person2 = { name: "Charlie" };
+
+// When wrapper is called with .call(), its `this` is set
+const arrow1 = wrapper.call(person1); 
+const arrow2 = wrapper.call(person2);
+
+arrow1(); // Bob ✅ (arrow captured person1's this)
+arrow2(); // Charlie ✅ (arrow captured person2's this)
+```
+
+---
+
+### 🔑 Why this works
+- `wrapper` is a **normal function** → its `this` can be changed with `.call()` or `.apply()`.  
+- Inside `wrapper`, you create an **arrow function**.  
+- That arrow function **lexically captures `this`** from `wrapper`.  
+- When you return the arrow, it *remembers* that `this` forever (**closure**).
+
+So:  
+- `arrow1` permanently has `this = person1`.  
+- `arrow2` permanently has `this = person2`.  
+- No later `.call()` / `.apply()` on `arrow1` or `arrow2` can change that, because arrow `this` is **fixed at definition time**.
