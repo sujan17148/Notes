@@ -32,7 +32,7 @@ console.log(greet("Alice")); // "Hello, Alice!"
 
 ---
 
-### 1. Function Declaration (Named Function)
+### 1. Function Declaration /function statements
 
 ```js
 // Function Declaration - Hoisted

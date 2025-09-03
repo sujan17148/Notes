@@ -239,4 +239,3 @@ console.log(window.name); // "Alice"
 - Returns the object (`Person { name: 'Bob' }`).
 
 ---
-```
