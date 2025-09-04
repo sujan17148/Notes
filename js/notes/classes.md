@@ -51,6 +51,22 @@ const Animal = class {
 const dog = new Animal("Dog");
 dog.speak(); // Dog makes a sound
 ```
+--- 
+
+# What `instanceof` Does
+
+`instanceof` checks if an object is created by a particular class (constructor function) or is in its prototype chain.
+
+```js
+class Animal {}
+class Dog extends Animal {}
+
+const d = new Dog();
+
+console.log(d instanceof Dog);    // true
+console.log(d instanceof Animal); // true (because Dog extends Animal)
+console.log(d instanceof Object); // true (all objects inherit from Object)
+```
 
 ---
 
@@ -182,3 +198,64 @@ console.log(account.balance); // undefined
 - This can be done using:
   - `this.parentMethod()` → calls the parent’s method if not overridden.  
   - `super.parentMethod()` → calls the parent’s method explicitly when overridden in the child.  
+
+
+
+### Getters and Setters in JavaScript
+
+**Getters** and **Setters** are special methods that allow you to access and modify properties of an object in a controlled way.
+
+- **Getter (`get`)**: Allows you to access a property like a variable, but behind the scenes, it executes a function.
+- **Setter (`set`)**: Allows you to assign a value to a property like a variable, but behind the scenes, it executes a function.
+
+### Common Uses
+1. **Encapsulation**: Control how a property is read or modified.
+2. **Computed Properties**: Calculate a value when accessed.
+3. **Validation**: Check values before setting them.
+
+### Example
+
+```js
+class User {
+  constructor(name, age) {
+    this._name = name;  // convention: underscore for "private-like" properties
+    this._age = age;
+  }
+
+  // Getter for 'age'
+  get age() {
+    return this._age;
+  }
+
+  // Setter for 'age'
+  set age(value) {
+    if (value < 0) {
+      console.log("Age cannot be negative!");
+      return;
+    }
+    this._age = value;
+  }
+}
+
+const user1 = new User("Alice", 20);
+
+// Using getter
+console.log(user1.age);  // 👉 20 (calls the get age())
+
+// Using setter
+user1.age = 25;          // 👉 sets _age to 25 via set age()
+console.log(user1.age);  // 👉 25
+
+user1.age = -5;          // 👉 Age cannot be negative!
+console.log(user1.age);  // 👉 25 (unchanged)
+```
+
+### Important Notes:
+- You **don’t call getters and setters like functions**. Instead of `user1.age()`, you just use `user1.age`. or for setter `user1.age=5`
+- **Getters must return something**.
+- **Setters must accept exactly one parameter**.
+- You can have:
+  - **A getter without a setter** (read-only property).
+  - **A setter without a getter** (write-only property, though this is rare).
+
+Let me know if you'd like more examples or details!
