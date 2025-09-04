@@ -105,6 +105,7 @@ const obj = {
     },
     arrowFunction: () => {
         console.log(this.name); // undefined (window.name in browsers)
+        console.log(this); // prints global object since its lexical scope is global scope 
     }
 };
 

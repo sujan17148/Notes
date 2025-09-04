@@ -147,20 +147,22 @@ JavaScript provides four main combinators for handling multiple promises:
 
 ## 1. `Promise.all()`
 
+- Takes an array of promises
 - Waits for **all promises to resolve**.  
 - If **any promise rejects**, the whole operation fails immediately (fail-fast).  
-- Returns an **array of resolved values**.  
+- Returns a single promise that contains array of raw values that comes by resolving promise. 
+-messing array order while destructuring can cause serious bug.
 
 ✅ Use when you **need all promises to succeed**.
 
-```js
-Promise.all([
-  Promise.resolve(1),
-  Promise.resolve(2),
-  Promise.resolve(3)
-]).then(console.log); 
-// [1, 2, 3]
-```
+const p1 = Promise.resolve("A");
+const p2 = Promise.resolve("B");
+Promise.all([p1, p2])
+  .then(([a, b]) => console.log(a, b)) // "A B"
+  .catch(err => console.log("Error:", err));
+
+  //alternate way if inside async await
+  cosnt [a,b] await promise.all([p1,p2])
 
 ```js
 Promise.all([
@@ -174,10 +176,11 @@ Promise.all([
 ---
 
 ## 2. `Promise.allSettled()`
-
-- Waits for **all promises to settle** (resolve or reject).  
-- **Never rejects**.  
-- Returns an array of **objects**:  
+Takes an array of promises.
+it dont fail even if some promises fails to resolve.
+returns a single promise that contains array of object(not raw values like all)
+each object contains 
+  
   - `{ status: "fulfilled", value: ... }`  
   - `{ status: "rejected", reason: ... }`  
 
@@ -202,7 +205,8 @@ Promise.allSettled([
 
 ## 3. `Promise.race()`
 
-- Resolves or rejects as soon as **the first promise settles**.  
+- takes an array of promises 
+-retuns the first promise to get resolved or rejected
 - Doesn’t care about the outcome of the other promises.  
 
 ✅ Use when you only care about **the fastest result** (first success or first failure).
@@ -230,7 +234,8 @@ Promise.race([
 
 ## 4. `Promise.any()`
 
-- Resolves as soon as **the first promise fulfills**.  
+- takes an array of promise as argument
+returns first promise to be resolved
 - Ignores rejections, waits until it finds a **successful result**.  
 - If **all promises reject**, it throws an **`AggregateError`**.  
 
